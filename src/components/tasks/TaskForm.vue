@@ -7,7 +7,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { useTaskStore } from "@/stores/taskStore";
+import { useTaskStore } from "@/store/taskStore.js";
 import AppButton from "@/components/ui/AppButton.vue";
 
 const newTaskTitle = ref("");

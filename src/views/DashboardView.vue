@@ -5,7 +5,7 @@
     <TaskList
       :tasks="taskStore.tasks"
       title="Pending Tasks"
-      @delete="taskStore.deleteTask($event)"
+      @delete="deleteTask"
     />
   </div>
 </template>
@@ -13,27 +13,27 @@
 <script>
 import TaskList from "@/components/tasks/TaskList.vue";
 import { useTaskStore } from "@/store/taskStore.js";
-const taskStore = useTaskStore();
+import TaskForm from "@/components/tasks/TaskForm.vue";
+
 export default {
-  name: "DashboardView",
-  components: { TaskList },
-  data() {
+  name: "DashboardView2",
+  components: { TaskList, TaskForm },
+  setup() {
+    const taskStore = useTaskStore();
+    const handleDeleteTask = (taskId) => {
+      taskStore.deleteTask(taskId);
+    };
+
     return {
-      tasks: [
-        { id: 1, title: "Learn Vue.js", description: "Complete the tutorial" },
-        {
-          id: 2,
-          title: "Build Task Manager",
-          description: "Implement all features",
-        },
-      ],
+      taskStore,
+      handleDeleteTask,
     };
   },
-  methods: {
-    handleDeleteTask(taskId) {
-      this.tasks = this.tasks.filter((task) => task.id !== taskId);
-    },
-  },
+  // methods: {
+  //   handleDeleteTask(taskId) {
+  //     this.tasks = this.tasks.filter((task) => task.id !== taskId);
+  //   },
+  // },
 };
 </script>
 
