@@ -1,19 +1,13 @@
 <template>
   <div class="dashboard">
     <h2>My Tasks</h2>
-    <TaskForm />
-    <TaskList
-      :tasks="taskStore.tasks"
-      title="Pending Tasks"
-      @delete="taskStore.deleteTask($event)"
-    />
+    <TaskList :tasks="tasks" title="Pending Tasks" @delete="handleDeleteTask" />
   </div>
 </template>
 
 <script>
 import TaskList from "@/components/tasks/TaskList.vue";
-import { useTaskStore } from "@/store/taskStore.js";
-const taskStore = useTaskStore();
+
 export default {
   name: "DashboardView",
   components: { TaskList },
