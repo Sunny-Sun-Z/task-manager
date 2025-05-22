@@ -10,22 +10,31 @@ export default {
     size: {
       type: String,
       default: "medium", // small | medium | large
+      validator: (value) => ["small", "medium", "large"].includes(value),
     },
     variant: {
       type: String,
       default: "primary", // primary | secondary | danger
+      validator: (value) => ["primary", "secondary", "danger"].includes(value),
     },
   },
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .app-button {
+  all: unset;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: 500;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
   /* Sizes */
   &.small {
@@ -62,6 +71,9 @@ export default {
     &:hover {
       background: #cc0000;
     }
+  }
+  a.app-button {
+    text-decoration: none;
   }
 }
 </style>

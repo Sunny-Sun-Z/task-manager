@@ -1,58 +1,77 @@
 <template>
   <AppCard>
     <div class="task-item">
-      <div class="task-content">
-        <h4>{{ task.title }}</h4>
-        <p v-if="task.description">{{ task.description }}</p>
-      </div>
-      <div class="task-actions">
-        <AppButton
-          size="small"
-          variant="danger"
-          @click="$emit('delete', task.id)"
-        >
-          Delete
-        </AppButton>
-      </div>
+      <input
+        type="checkbox"
+        :checked="task.done"
+        @change="taskStore.toggleTask(task.id)"
+        class="task-checkbox"
+      />
+      <span class="task-title">{{ task.title }}</span>
+      <AppButton
+        size="small"
+        variant="primary"
+        @click="$emit('delete', task.id)"
+        class="delete-btn"
+      >
+        <span class="delete-icon">🗑️</span>
+        <span class="delete-text">Delete</span></AppButton
+      >
     </div>
   </AppCard>
 </template>
 
-<script>
+<script setup>
 import AppCard from "../ui/AppCard.vue";
 import AppButton from "../ui/AppButton.vue";
+import { useTaskStore } from "@/store/taskStore";
+import { defineProps } from "vue"; // Explicit import
+const taskStore = useTaskStore();
 
-export default {
-  name: "TaskItem",
-  components: { AppCard, AppButton },
-  props: {
-    task: {
-      type: Object,
-      required: true,
-    },
-  },
-};
+defineProps({
+  task: { type: Object, required: true },
+});
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .task-item {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  .task-content {
-    flex: 1;
-    h4 {
-      margin: 0 0 4px 0;
-      color: #2c3e50;
-    }
-    p {
-      margin: 0;
-      color: #7f8c8d;
-      font-size: 14px;
-    }
-  }
-  .task-actions {
-    margin-left: 16px;
-  }
+  gap: 12px;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.task-checkbox {
+  transform: scale(1.3);
+  accent-color: #42b983;
+}
+
+.task-title {
+  flex-grow: 1;
+}
+
+.is-completed .task-title {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.delete-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.delete-text {
+  /* Reset any inherited link styles */
+  all: initial;
 }
 </style>
